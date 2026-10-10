@@ -522,6 +522,25 @@ input[type='range'] {
   font-size: 0.9rem;
 }
 
+/* Phone held sideways: visual on the left, text and buttons on the right. */
+@media (orientation: landscape) and (max-height: 540px) {
+  .breathe {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 2rem;
+    align-items: center;
+  }
+
+  .breathe .visual {
+    grid-row: 1 / span 6;
+    width: min(62dvh, 20rem);
+  }
+
+  .phase-label {
+    font-size: 2rem;
+  }
+}
+
 /* No keyboard hint on touch-only devices. */
 @media (hover: none) and (pointer: coarse) {
   .keyboard-hint {

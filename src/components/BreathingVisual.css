@@ -33,11 +33,8 @@
   filter: drop-shadow(0 0 2px var(--accent-glow));
 }
 
-/* Minimal motion: the circle's brightness fades smoothly instead of moving. */
-.visual--minimal .visual-circle {
-  transition: opacity 0.4s linear;
-}
-
+/* Minimal motion: no travelling dot; the active edge is a little bolder and
+   fades in slowly, and the circle changes brightness instead of size. */
 .visual--minimal .visual-edge {
   stroke-width: 2.2;
   transition: stroke 1.2s ease;
