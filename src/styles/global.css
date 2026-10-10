@@ -1,0 +1,675 @@
+/* ------------------------------------------------------------------
+   Colour tokens
+   All colours live here. Text colours meet WCAG AA contrast (4.5:1).
+   ------------------------------------------------------------------ */
+:root {
+  color-scheme: light;
+  --bg: #f3f6f5;
+  --surface: #ffffff;
+  --surface-2: #e6eeec;
+  --border: #d3dfdc;
+  --text: #1d2b2a;
+  --text-muted: #4e605e;
+  --accent: #2f7069;
+  --accent-soft: #8cc2ba;
+  --accent-glow: rgb(47 112 105 / 0.45);
+  --on-accent: #ffffff;
+  --track: #c4d3d0;
+  --focus: #1f5f9e;
+  --notice-bg: #fbf3e4;
+  --notice-border: #ecd9b4;
+  --shadow: 0 1px 2px rgb(29 43 42 / 0.06), 0 4px 16px rgb(29 43 42 / 0.05);
+
+  --radius: 16px;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Dark theme: when the system prefers dark (and the user hasn't chosen light)... */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #101716;
+    --surface: #18221f;
+    --surface-2: #22302d;
+    --border: #2d3d3a;
+    --text: #e4ecea;
+    --text-muted: #a3b4b1;
+    --accent: #8fcfc6;
+    --accent-soft: #3f7d75;
+    --accent-glow: rgb(143 207 198 / 0.55);
+    --on-accent: #0f1f1d;
+    --track: #33443f;
+    --focus: #9cc8ff;
+    --notice-bg: #2a2619;
+    --notice-border: #4a412a;
+    --shadow: none;
+  }
+}
+
+/* ...or when the user picked dark in Settings. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #101716;
+  --surface: #18221f;
+  --surface-2: #22302d;
+  --border: #2d3d3a;
+  --text: #e4ecea;
+  --text-muted: #a3b4b1;
+  --accent: #8fcfc6;
+  --accent-soft: #3f7d75;
+  --accent-glow: rgb(143 207 198 / 0.55);
+  --on-accent: #0f1f1d;
+  --track: #33443f;
+  --focus: #9cc8ff;
+  --notice-bg: #2a2619;
+  --notice-border: #4a412a;
+  --shadow: none;
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2 {
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 1.75rem;
+  margin: 0 0 1rem;
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin: 1.75rem 0 0.5rem;
+}
+
+h1:focus {
+  outline: none; /* headings get focus only to guide screen readers */
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+kbd {
+  font-family: inherit;
+  font-size: 0.85em;
+  padding: 0.1em 0.45em;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+/* Hidden on screen, but still read by screen readers. */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------------------------------------------------
+   App layout (mobile first: navigation at the bottom)
+   ------------------------------------------------------------------ */
+.app {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'header'
+    'main'
+    'nav';
+}
+
+.app-header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  padding: max(0.75rem, env(safe-area-inset-top)) 16px 0.25rem;
+}
+
+.app-title {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text-muted);
+}
+
+.app-main {
+  grid-area: main;
+  width: min(100%, 40rem);
+  justify-self: center;
+  padding: 0.5rem 16px 2rem;
+}
+
+.nav {
+  grid-area: nav;
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 1;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  min-height: 3.75rem;
+  padding: 0.5rem 0.25rem;
+  border: 0;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.nav-item[aria-current='page'] {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.nav-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Wider screens: navigation moves to the top, next to the title. */
+@media (min-width: 720px) {
+  .app {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'header nav'
+      'main main';
+  }
+
+  .app-header {
+    padding: 1rem 24px;
+  }
+
+  .nav {
+    position: static;
+    background: none;
+    border: 0;
+    padding: 0.5rem 16px;
+    gap: 0.25rem;
+  }
+
+  .nav-item {
+    flex-direction: row;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+
+  .nav-item[aria-current='page'] {
+    background: var(--surface-2);
+  }
+
+  .nav-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------ */
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  min-width: 8rem;
+  min-height: 3.25rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  border: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn-secondary {
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* ------------------------------------------------------------------
+   Form controls
+   ------------------------------------------------------------------ */
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.field-label {
+  display: block;
+  font-weight: 600;
+}
+
+legend.field-label {
+  margin-bottom: 0.5rem;
+}
+
+.field-hint {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Chips: radio buttons that look like pills */
+.settings .chip-group + .chip-group {
+  margin-top: 1rem;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  position: relative;
+  cursor: pointer;
+}
+
+.chip input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.chip span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.chip input:checked + span {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+}
+
+.chip input:focus-visible + span {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Switch */
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+
+.switch-text {
+  cursor: pointer;
+}
+
+.switch {
+  appearance: none;
+  flex: none;
+  position: relative;
+  width: 3.25rem;
+  height: 2rem;
+  margin: 0;
+  border-radius: 999px;
+  background: var(--track);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+  transition: transform 0.2s ease;
+}
+
+.switch:checked {
+  background: var(--accent);
+}
+
+.switch:checked::after {
+  transform: translateX(1.25rem);
+}
+
+.switch:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Slider */
+.slider-row {
+  padding: 0.5rem 0;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.slider-value {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+input[type='range'] {
+  width: 100%;
+  min-height: 2.75rem;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------------
+   Shared bits
+   ------------------------------------------------------------------ */
+.card {
+  margin-top: 1rem;
+  padding: 0.5rem 1.25rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  margin-top: 0.75rem;
+}
+
+.notice {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--notice-border);
+  border-radius: 12px;
+  background: var(--notice-bg);
+}
+
+/* Gentle fade-in for screens, only when full motion is on. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+:root[data-motion='full'] .screen {
+  animation: fade-in 0.4s ease both;
+}
+
+/* ------------------------------------------------------------------
+   Breathe screen
+   ------------------------------------------------------------------ */
+.breathe {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 0.25rem;
+}
+
+.length-picker {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  text-align: center;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.length-picker legend.field-label {
+  margin-inline: auto;
+  padding-top: 0.75rem;
+}
+
+.length-picker .chip-row {
+  justify-content: center;
+}
+
+.length-summary {
+  margin: 0;
+}
+
+.keyboard-hint {
+  margin: 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* No keyboard hint on touch-only devices. */
+@media (hover: none) and (pointer: coarse) {
+  .keyboard-hint {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Complete screen
+   ------------------------------------------------------------------ */
+.complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 12vh;
+}
+
+.complete-badge {
+  width: 6rem;
+  height: 6rem;
+  margin-bottom: 1.5rem;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+}
+
+.complete-badge svg {
+  width: 3rem;
+  height: 3rem;
+}
+
+:root[data-motion='full'] .complete {
+  animation-duration: 1.2s;
+}
+
+.complete-message {
+  max-width: 24rem;
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.complete-summary {
+  margin: 0 0 2rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------
+   Settings screen
+   ------------------------------------------------------------------ */
+.preset-row {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0.75rem 0 0.5rem;
+}
+
+@media (min-width: 480px) {
+  .preset-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.preset {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.preset[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+
+.preset-name {
+  font-weight: 600;
+}
+
+.preset-description {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.settings .chip-group {
+  margin-top: 0.75rem;
+}
+
+.settings .card > .field-hint {
+  margin: 0.75rem 0 0;
+}
+
+.settings-footer {
+  margin-top: 1.25rem;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------
+   How it works screen
+   ------------------------------------------------------------------ */
+.about .lead {
+  font-size: 1.1rem;
+}
+
+.about-figure {
+  margin: 1.5rem auto;
+  width: min(100%, 18rem);
+}
+
+.diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--accent);
+}
+
+.diagram-edges {
+  stroke: var(--accent);
+}
+
+.diagram-dot {
+  fill: var(--accent);
+}
+
+.diagram-labels {
+  fill: var(--text);
+  font-family: var(--font);
+}
+
+.about ul,
+.about ol {
+  padding-left: 1.25rem;
+}
+
+.about li {
+  margin-bottom: 0.5rem;
+}
+
+.about .button-row {
+  margin-top: 1.5rem;
+}

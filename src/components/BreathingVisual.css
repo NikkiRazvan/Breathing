@@ -1,0 +1,52 @@
+.visual {
+  position: relative;
+  /* As big as possible, but never wider than the screen or taller than ~40% of it. */
+  width: min(100%, 21rem, 42dvh);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.visual-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.visual-circle {
+  fill: var(--accent-soft);
+}
+
+.visual-edge {
+  stroke: var(--track);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  transition: stroke 0.6s ease;
+}
+
+.visual-edge.is-active {
+  stroke: var(--accent);
+}
+
+.visual-dot {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 2px var(--accent-glow));
+}
+
+/* Minimal motion: the circle's brightness fades smoothly instead of moving. */
+.visual--minimal .visual-circle {
+  transition: opacity 0.4s linear;
+}
+
+.visual--minimal .visual-edge {
+  stroke-width: 2.2;
+  transition: stroke 1.2s ease;
+}
+
+.visual-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}

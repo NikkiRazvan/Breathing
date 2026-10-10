@@ -1,0 +1,29 @@
+.phase {
+  text-align: center;
+}
+
+.phase-label {
+  margin: 0;
+  font-size: clamp(2rem, 9vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.phase-detail {
+  margin: 0.35rem 0 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.countdown {
+  font-size: clamp(3rem, 16vw, 4.75rem);
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--text);
+}
+
+.countdown.is-paused {
+  color: var(--text-muted);
+}
