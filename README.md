@@ -53,17 +53,21 @@ Installing a web app (a "PWA") needs two things: the app must be served over **H
 manifest and service worker. `localhost` counts as secure, but your computer's local network address
 (e.g. `http://192.168.1.20:5173`) does not. So to install it on a phone, put the built app online first.
 
-### 1. Build and host it (free)
+### 1. Host it (free)
 
-```bash
-npm run build
-```
+**GitHub Pages (set up already).** The workflow in `.github/workflows/deploy.yml` builds, tests and publishes the app
+every time code is pushed to the repository's default branch. It needs a one-time setting: in the repository go to
+**Settings → Pages** and set **Source** to **GitHub Actions**. The app is then available at
+`https://<your-github-name>.github.io/<repository-name>/`. You can follow each run in the **Actions** tab.
 
-This creates a `dist/` folder. It is a plain static website, so any static hosting service with HTTPS works. Examples
-are Netlify, Vercel, Cloudflare Pages and GitHub Pages: upload the contents of `dist/`, or connect the repository and
-use `npm run build` as the build command and `dist` as the output folder.
+> GitHub Pages is free for public repositories. For a private repository it needs a paid or student GitHub plan
+> (GitHub Pro is free for students through [GitHub Education](https://education.github.com/)). The published app is
+> visible to anyone with the link either way.
 
-The app uses relative paths, so it also works in a sub-folder such as `https://<your-name>.github.io/Breathing/`.
+**Anywhere else.** Run `npm run build`, which creates a `dist/` folder. It is a plain static website, so any static
+hosting service with HTTPS works (e.g. Netlify, Vercel or Cloudflare Pages): upload the contents of `dist/`, or
+connect the repository and use `npm run build` as the build command and `dist` as the output folder. The app uses
+relative paths, so it works in a sub-folder too.
 
 ### 2. Add it to your home screen
 
